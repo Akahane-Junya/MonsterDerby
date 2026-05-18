@@ -28,3 +28,9 @@
 - 保存形式: JSON（MonsterSaveData, Application.persistentDataPath/save.json）
 
 ---
+
+# モンスター図鑑仕様（未実装）
+
+- ゲーム内で全モンスターの情報を一覧・詳細表示できる図鑑機能を追加する
+- 各モンスターの種族・能力値・スキル・入手方法などを表示
+- UI/UX・データ構造・保存形式は要検討
