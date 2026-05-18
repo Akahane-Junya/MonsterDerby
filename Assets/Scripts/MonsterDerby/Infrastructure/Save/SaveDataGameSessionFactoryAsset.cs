@@ -21,6 +21,11 @@ namespace MonsterDerby.Infrastructure.Save
         [Header("Current Monster")]
         [SerializeField] private MonsterSaveData _currentMonster;
 
+
+        [Header("Catalog")]
+        [SerializeField] private string[] _unlockedMonsterIds;
+        [SerializeField] private string[] _unlockedSkillIds;
+
         private void Reset()
         {
             EnsureSerializedDefaults();
@@ -102,6 +107,7 @@ namespace MonsterDerby.Infrastructure.Save
             };
         }
 
+
         private void EnsureSerializedDefaults()
         {
             if (_awardEntries == null || _awardEntries.Length == 0)
@@ -161,6 +167,11 @@ namespace MonsterDerby.Infrastructure.Save
                     },
                 };
             }
+
+            if (_unlockedMonsterIds == null)
+                _unlockedMonsterIds = new[] { "Slime" };
+            if (_unlockedSkillIds == null)
+                _unlockedSkillIds = new[] { "Fireball" };
 
             if (_currentMonster == null)
                 _currentMonster = new MonsterSaveData();
