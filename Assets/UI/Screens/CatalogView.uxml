@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+  <!-- 背景画像・暗幕オーバーレイ -->
+  <ui:Image name="background" source="project://database/Assets/Art/World/Backgrounds/HomeMeadow.png?fileID=2800000&amp;guid=1afec5237fc5d18449b5bad978aaa252&amp;type=3#HomeMeadow" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;" />
+  <ui:VisualElement name="overlay" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; background-color: rgba(10, 5, 30, 0.6);" />
+
+  <ui:VisualElement name="mainContainer" style="flex-grow: 1; align-items: center; justify-content: center; padding-top: 8px; padding-bottom: 8px;">
+    <!-- ヘッダー -->
+    <ui:VisualElement name="header" style="flex-direction: row; width: 100%; max-width: 620px; justify-content: center; align-items: center; background-color: rgba(15, 8, 40, 0.9); border-radius: 8px; padding: 6px 0 6px 0; border-width: 2px; border-color: rgb(178, 143, 58); margin-bottom: 8px;">
+      <ui:Label text="図鑑" name="titleLabel" style="font-size: 16px; -unity-font-style: bold; color: rgb(255, 220, 80); -unity-text-outline-width: 1px; -unity-text-outline-color: rgb(0, 0, 0);" />
+    </ui:VisualElement>
+
+    <!-- タブ・リスト・詳細パネル -->
+    <ui:VisualElement name="catalogPanel" style="width: 100%; max-width: 620px; background-color: rgba(30, 20, 40, 0.85); border-radius: 8px; padding: 8px 12px 8px 12px; border-width: 2px; border-color: rgb(178, 143, 58); flex-direction: column; gap: 8px;">
+      <ui:VisualElement name="tabBar" class="tab-bar" style="flex-direction: row; gap: 8px; margin-bottom: 8px;">
+        <ui:Button name="monsterTab" text="Monster" class="tab-button" />
+        <ui:Button name="skillTab" text="Skill" class="tab-button" />
+      </ui:VisualElement>
+      <ui:VisualElement name="contentArea" class="content-area" style="flex-direction: row; gap: 12px;">
+        <ui:ListView name="itemList" class="item-list" style="flex-basis: 180px; min-width: 140px; max-width: 220px; background-color: rgba(40,30,50,0.7); border-radius: 6px;" />
+        <ui:VisualElement name="detailPanel" class="detail-panel" style="flex-grow: 1; min-width: 200px; background-color: rgba(50,40,60,0.7); border-radius: 6px;" />
+      </ui:VisualElement>
+    </ui:VisualElement>
+
+    <!-- ボタン群（閉じるのみ） -->
+    <ui:VisualElement name="buttonRow" style="flex-direction: row; justify-content: flex-end; width: 100%; max-width: 620px; gap: 8px; margin-top: 8px;">
+      <ui:Button name="closeButton" text="閉じる" style="flex-grow: 0; width: 100px; height: 28px; background-color: rgba(35, 20, 8, 0.92); border-radius: 8px; border-width: 2px; border-color: rgb(178, 143, 58); color: rgb(230, 185, 100); font-size: 12px; -unity-font-style: bold;" />
+    </ui:VisualElement>
+  </ui:VisualElement>
+</ui:UXML>
