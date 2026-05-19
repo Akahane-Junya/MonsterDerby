@@ -9,9 +9,13 @@ namespace MonsterDerby.Presentation.Screens.Catalog
     /// <summary>
     /// Catalog画面のPresenter（モンスター・スキル切替タブ付き）
     /// </summary>
+
+    using MonsterDerby.Application.Context;
+
     public sealed class CatalogPresenter : IScreenPresenter
     {
         private CatalogView _view;
+        private readonly INavigationContext _navigationContext;
         private enum TabKind { Monster, Skill }
         private TabKind _currentTab = TabKind.Monster;
 
@@ -25,6 +29,11 @@ namespace MonsterDerby.Presentation.Screens.Catalog
             new CatalogEntry { Name = "Fireball", Description = "Deals fire damage.", IsUnlocked = true },
             new CatalogEntry { Name = "Heal", Description = "Restores HP.", IsUnlocked = false },
         };
+
+        public CatalogPresenter(INavigationContext navigationContext)
+        {
+            _navigationContext = navigationContext;
+        }
 
         public void BindView(IScreenView view)
         {
@@ -42,11 +51,7 @@ namespace MonsterDerby.Presentation.Screens.Catalog
 
         private void NavigationToHome()
         {
-            // PresenterがNavigationContextを持っていない場合はScreenNavigatorを直接参照する必要あり
-            // ここではScreenNavigatorのシングルトンやDIがなければイベント等で通知する設計が望ましい
-            // 仮実装: ScreenNavigator.Instance.NavigateTo(ScreenId.Home); など
-            // TODO: NavigationContextを注入して正規実装にする
-            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name); // 仮: シーン再読込でHomeに戻す
+            _navigationContext.Navigator.NavigateTo(MonsterDerby.Domain.SharedKernel.ScreenId.Home);
         }
 
         public void Show() { }

@@ -80,7 +80,7 @@ namespace MonsterDerby.Presentation.Navigation
                     return new SettingsPresenter(_dependencies.CreateNavigationContext());
 
                 case ScreenId.Catalog:
-                    return new MonsterDerby.Presentation.Screens.Catalog.CatalogPresenter();
+                    return new MonsterDerby.Presentation.Screens.Catalog.CatalogPresenter(_dependencies.CreateNavigationContext());
 
                 default:
                     throw new ArgumentException($"未知の ScreenId です: {id}", nameof(id));
