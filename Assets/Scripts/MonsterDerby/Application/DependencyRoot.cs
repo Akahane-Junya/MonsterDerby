@@ -14,6 +14,10 @@ namespace MonsterDerby.Application
     /// アプリケーション全体の依存関係のルート
     /// 基盤Repositoryを保持し、機能別Contextを生成する
     /// </summary>
+
+    using MonsterDerby.Infrastructure.Save;
+    using MonsterDerby.Domain.Monster;
+
     public sealed class DependencyRoot
     {
         private readonly ICourseRepository _courseRepository;
@@ -24,6 +28,8 @@ namespace MonsterDerby.Application
         private readonly GameSession _gameSession;
         private readonly ScreenNavigator _navigator;
         private readonly MasterDataCatalog _masterDataCatalog;
+        private readonly CatalogUnlockRepositoryAsset _catalogUnlockRepository;
+        private readonly MonsterDefinitionRepositoryAsset _monsterDefinitionRepository;
 
         public DependencyRoot(
             ICourseRepository courseRepository,
@@ -32,7 +38,9 @@ namespace MonsterDerby.Application
             ScriptableObjectMonsterVisualRepository monsterVisualRepository,
             GameSession gameSession,
             ScreenNavigator navigator,
-            MasterDataCatalog masterDataCatalog)
+            MasterDataCatalog masterDataCatalog,
+            CatalogUnlockRepositoryAsset catalogUnlockRepository,
+            MonsterDefinitionRepositoryAsset monsterDefinitionRepository)
         {
             _courseRepository = courseRepository ?? throw new ArgumentNullException(nameof(courseRepository));
             _skillRepository = skillRepository ?? throw new ArgumentNullException(nameof(skillRepository));
@@ -42,6 +50,17 @@ namespace MonsterDerby.Application
             _gameSession = gameSession ?? throw new ArgumentNullException(nameof(gameSession));
             _navigator = navigator ?? throw new ArgumentNullException(nameof(navigator));
             _masterDataCatalog = masterDataCatalog ?? throw new ArgumentNullException(nameof(masterDataCatalog));
+            _catalogUnlockRepository = catalogUnlockRepository ?? throw new ArgumentNullException(nameof(catalogUnlockRepository));
+            _monsterDefinitionRepository = monsterDefinitionRepository ?? throw new ArgumentNullException(nameof(monsterDefinitionRepository));
+        }
+        public CatalogUnlockRepositoryAsset GetCatalogUnlockRepository()
+        {
+            return _catalogUnlockRepository;
+        }
+
+        public MonsterDefinitionRepositoryAsset GetMonsterDefinitionRepository()
+        {
+            return _monsterDefinitionRepository;
         }
 
         /// <summary>
