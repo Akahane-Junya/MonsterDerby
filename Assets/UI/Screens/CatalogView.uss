@@ -1,0 +1,102 @@
+/* CatalogView.uss: Catalog画面のスタイル */
+
+.catalog-root {
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 16px;
+    background-color: #222;
+}
+
+.tab-bar {
+    flex-direction: row;
+    margin-bottom: 12px;
+}
+
+.tab-button {
+    flex-grow: 1;
+    margin-right: 8px;
+    background-color: #444;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 6px;
+    border-width: 0;
+    height: 32px;
+}
+
+
+.content-area {
+    flex-direction: row;
+    flex-grow: 1;
+    min-height: 320px;
+}
+
+.item-list {
+    width: 220px;
+    min-width: 180px;
+    max-width: 260px;
+    background-color: #333;
+    color: #fff;
+    margin-right: 16px;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.item-list-element {
+    flex-direction: row;
+    align-items: center;
+    padding: 6px 10px;
+    border-bottom: 1px solid #444;
+}
+
+.item-name {
+    flex-grow: 1;
+    font-size: 15px;
+    color: #fff;
+}
+
+.item-status {
+    font-size: 13px;
+    color: #aaa;
+    margin-left: 8px;
+}
+
+.detail-panel-root {
+    flex-direction: column;
+    gap: 8px;
+}
+
+.detail-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.detail-description {
+    font-size: 15px;
+    color: #ccc;
+    margin-bottom: 8px;
+}
+
+.detail-image {
+    width: 96px;
+    height: 96px;
+    background-color: #444;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.detail-unlock-status {
+    font-size: 13px;
+    color: #ffb347;
+    margin-top: 8px;
+}
+
+.detail-panel {
+    flex-grow: 1;
+    background-color: #282828;
+    color: #fff;
+    border-radius: 6px;
+    padding: 16px;
+    min-width: 0;
+}
