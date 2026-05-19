@@ -168,10 +168,14 @@ namespace MonsterDerby.Infrastructure.Save
                 };
             }
 
-            if (_unlockedMonsterIds == null)
-                _unlockedMonsterIds = new[] { "Slime" };
-            if (_unlockedSkillIds == null)
-                _unlockedSkillIds = new[] { "Fireball" };
+            if (_monsterCatalogStates == null || _monsterCatalogStates.Length == 0)
+                _monsterCatalogStates = new[] {
+                    new MonsterDerby.Domain.Catalog.CatalogUnlockState { Id = "Slime", Stage = MonsterDerby.Domain.Catalog.CatalogUnlockStage.Encountered }
+                };
+            if (_skillCatalogStates == null || _skillCatalogStates.Length == 0)
+                _skillCatalogStates = new[] {
+                    new MonsterDerby.Domain.Catalog.CatalogUnlockState { Id = "Fireball", Stage = MonsterDerby.Domain.Catalog.CatalogUnlockStage.Encountered }
+                };
 
             if (_currentMonster == null)
                 _currentMonster = new MonsterSaveData();
