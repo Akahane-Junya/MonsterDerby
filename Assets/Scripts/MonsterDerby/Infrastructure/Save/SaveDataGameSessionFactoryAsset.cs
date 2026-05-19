@@ -23,8 +23,8 @@ namespace MonsterDerby.Infrastructure.Save
 
 
         [Header("Catalog")]
-        [SerializeField] private string[] _unlockedMonsterIds;
-        [SerializeField] private string[] _unlockedSkillIds;
+        [SerializeField] private MonsterDerby.Domain.Catalog.CatalogUnlockState[] _monsterCatalogStates;
+        [SerializeField] private MonsterDerby.Domain.Catalog.CatalogUnlockState[] _skillCatalogStates;
 
         private void Reset()
         {
