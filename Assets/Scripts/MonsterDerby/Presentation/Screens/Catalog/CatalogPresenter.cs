@@ -33,7 +33,20 @@ namespace MonsterDerby.Presentation.Screens.Catalog
             _view.OnMonsterTabClicked += () => SwitchTab(TabKind.Monster);
             _view.OnSkillTabClicked += () => SwitchTab(TabKind.Skill);
             _view.ItemList.selectionChanged += OnItemSelected;
+            // 閉じるボタンでHomeに戻る
+            var closeButton = (_view.GetType().GetProperty("CloseButton")?.GetValue(_view) as Button) ?? _view.GetComponent<UIDocument>()?.rootVisualElement?.Q<Button>("closeButton");
+            if (closeButton != null)
+                closeButton.clicked += () => NavigationToHome();
             SwitchTab(_currentTab);
+        }
+
+        private void NavigationToHome()
+        {
+            // PresenterがNavigationContextを持っていない場合はScreenNavigatorを直接参照する必要あり
+            // ここではScreenNavigatorのシングルトンやDIがなければイベント等で通知する設計が望ましい
+            // 仮実装: ScreenNavigator.Instance.NavigateTo(ScreenId.Home); など
+            // TODO: NavigationContextを注入して正規実装にする
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name); // 仮: シーン再読込でHomeに戻す
         }
 
         public void Show() { }

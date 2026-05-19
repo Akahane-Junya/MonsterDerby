@@ -45,13 +45,6 @@
                 <AttributeOverrides element-name="iconShadow" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=689204601&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_5"/>
             </ui:Instance>
 
-            <!-- Catalogボタン（アイコンはトロフィー流用） -->
-            <ui:Instance template="ScreenButton" name="catalogButton">
-                <AttributeOverrides element-name="icon" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=689204601&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_5"/>
-                <AttributeOverrides element-name="label" text="図鑑"/>
-                <AttributeOverrides element-name="iconShadow" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=689204601&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_5"/>
-            </ui:Instance>
-
             <!-- HomeView.cs / HomePresenter が参照する settingsButton を追加 -->
             <ui:Instance template="ScreenButton" name="settingsButton">
                 <!-- ひとまず既存アイコン流用。差し替えは後でOK。 -->
