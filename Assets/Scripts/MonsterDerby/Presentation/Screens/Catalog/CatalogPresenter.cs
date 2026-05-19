@@ -21,7 +21,6 @@ namespace MonsterDerby.Presentation.Screens.Catalog
     {
         private CatalogView _view;
         private readonly INavigationContext _navigationContext;
-        private readonly ICatalogUnlockRepository _catalogUnlockRepository;
         private readonly MonsterDefinitionRepositoryAsset _monsterRepository;
         private enum TabKind { Monster, Skill }
         private TabKind _currentTab = TabKind.Monster;
@@ -30,11 +29,9 @@ namespace MonsterDerby.Presentation.Screens.Catalog
 
         public CatalogPresenter(
             INavigationContext navigationContext,
-            ICatalogUnlockRepository catalogUnlockRepository,
             MonsterDefinitionRepositoryAsset monsterRepository)
         {
             _navigationContext = navigationContext;
-            _catalogUnlockRepository = catalogUnlockRepository;
             _monsterRepository = monsterRepository;
             _monsterDefs = _monsterRepository.GetAll() != null ? new List<MonsterDefinitionSO>(_monsterRepository.GetAll()) : new List<MonsterDefinitionSO>();
         }
@@ -71,8 +68,8 @@ namespace MonsterDerby.Presentation.Screens.Catalog
                 _view.ItemList.bindItem = (e, i) =>
                 {
                     var def = _monsterDefs[i];
-                    var stage = _catalogUnlockRepository.GetMonsterUnlockStage(def.Id);
-                    (e as Label).text = stage == CatalogUnlockStage.None ? "???" : def.Name;
+                    // 仮: 全て未確認扱い
+                    (e as Label).text = "???";
                 };
             }
             else
@@ -93,31 +90,11 @@ namespace MonsterDerby.Presentation.Screens.Catalog
             {
                 var def = selected?.FirstOrDefault() as MonsterDefinitionSO;
                 if (def == null || _view == null) return;
-                var stage = _catalogUnlockRepository.GetMonsterUnlockStage(def.Id);
                 _view.DetailPanel.Clear();
                 // タイトル
-                var title = new Label(stage == CatalogUnlockStage.None ? "???" : def.Name) { name = "detailTitle" };
+                var title = new Label("???") { name = "detailTitle" };
                 _view.DetailPanel.Add(title);
-                // アイコン
-                if (stage != CatalogUnlockStage.None && def.Icon != null)
-                {
-                    var icon = new UnityEngine.UIElements.Image { image = def.Icon.texture, name = "detailIcon" };
-                    _view.DetailPanel.Add(icon);
-                }
-                // 説明
-                var desc = new Label(stage == CatalogUnlockStage.Raised ? def.Description : "") { name = "detailDescription" };
-                _view.DetailPanel.Add(desc);
-                // 成長タイプ
-                var growth = new Label(stage == CatalogUnlockStage.Raised ? $"成長: {def.GrowthType}" : "") { name = "detailGrowthType" };
-                _view.DetailPanel.Add(growth);
-                // スキル一覧
-                if (stage == CatalogUnlockStage.Raised && def.SkillIds != null)
-                {
-                    var skills = string.Join(", ", def.SkillIds);
-                    var skillLabel = new Label($"スキル: {skills}") { name = "detailSkills" };
-                    _view.DetailPanel.Add(skillLabel);
-                }
-                // アンロック状態
+                // 以降は全て非表示（仮実装）
                 var unlock = new Label(stage == CatalogUnlockStage.Raised ? "全情報解放" : stage == CatalogUnlockStage.Encountered ? "出会った" : "???") { name = "detailUnlockStatus" };
                 _view.DetailPanel.Add(unlock);
             }
