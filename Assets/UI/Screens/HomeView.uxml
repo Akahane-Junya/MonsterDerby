@@ -1,0 +1,58 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="ScreenButton" src="ScreenButton.uxml#ScreenButton"/>
+    <ui:Image name="background" source="project://database/Assets/Art/World/Backgrounds/HomeMeadow.png?fileID=2800000&amp;guid=1afec5237fc5d18449b5bad978aaa252&amp;type=3#HomeMeadow" scale-mode="stretch-to-fill" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;"/>
+    <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row;">
+        <ui:VisualElement name="leftMenu" style="flex-grow: 1; width: 40px; align-items: center; margin-top: 24px;">
+            <ui:Instance template="ScreenButton" name="trainingButton">
+                <AttributeOverrides element-name="icon" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=1498127410&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_0"/>
+                <AttributeOverrides element-name="label" text="クンレン"/>
+                <AttributeOverrides element-name="iconShadow" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=1498127410&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_0"/>
+            </ui:Instance>
+            <ui:Instance template="ScreenButton" name="shopButton">
+                <AttributeOverrides element-name="icon" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=-49212957&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_2"/>
+                <AttributeOverrides element-name="label" text="ショップ" focusable="false"/>
+                <AttributeOverrides element-name="iconShadow" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=-49212957&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_2"/>
+            </ui:Instance>
+            <ui:Instance template="ScreenButton" name="breedingButton">
+                <AttributeOverrides element-name="icon" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=1284676089&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_4"/>
+                <AttributeOverrides element-name="label" text="コウハイ"/>
+                <AttributeOverrides element-name="iconShadow" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=1284676089&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_4"/>
+            </ui:Instance>
+        </ui:VisualElement>
+        <ui:VisualElement name="centerArea" style="flex-grow: 1; width: 216px; align-items: center; justify-content: center;">
+            <ui:Image name="monster" source="project://database/Assets/Art/World/Dragon.png?fileID=2800000&amp;guid=741d68614c4f8054f808e94965b35843&amp;type=3#Dragon" style="position: absolute;"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="rightMenu" style="flex-grow: 1; width: 20px; align-items: center; margin-top: 24px;">
+            <ui:Instance template="ScreenButton" name="raceButton">
+                <AttributeOverrides element-name="icon" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=837532290&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_1"/>
+                <AttributeOverrides element-name="label" text="レース"/>
+                <AttributeOverrides element-name="iconShadow" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=837532290&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_1"/>
+            </ui:Instance>
+            <ui:Instance template="ScreenButton" name="statusButton">
+                <AttributeOverrides element-name="icon" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=-1495785020&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_3"/>
+                <AttributeOverrides element-name="label" text="ステータス"/>
+                <AttributeOverrides element-name="iconShadow" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=-1495785020&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_3"/>
+            </ui:Instance>
+            <ui:Instance template="ScreenButton" name="awardsButton">
+                <AttributeOverrides element-name="icon" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=689204601&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_5"/>
+                <AttributeOverrides element-name="label" text="トロフィー"/>
+                <AttributeOverrides element-name="iconShadow" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=689204601&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_5"/>
+            </ui:Instance>
+
+            <!-- Catalogボタン（アイコンはトロフィー流用） -->
+            <ui:Instance template="ScreenButton" name="catalogButton">
+                <AttributeOverrides element-name="icon" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=689204601&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_5"/>
+                <AttributeOverrides element-name="label" text="図鑑"/>
+                <AttributeOverrides element-name="iconShadow" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=689204601&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_5"/>
+            </ui:Instance>
+
+            <!-- HomeView.cs / HomePresenter が参照する settingsButton を追加 -->
+            <ui:Instance template="ScreenButton" name="settingsButton">
+                <!-- ひとまず既存アイコン流用。差し替えは後でOK。 -->
+                <AttributeOverrides element-name="icon" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=689204601&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_5"/>
+                <AttributeOverrides element-name="label" text="セッテイ"/>
+                <AttributeOverrides element-name="iconShadow" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=689204601&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_5"/>
+            </ui:Instance>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
