@@ -11,6 +11,7 @@ using MonsterDerby.Presentation.Screens.Status;
 using MonsterDerby.Presentation.Screens.Awards;
 using MonsterDerby.Presentation.Screens.Settings;
 using MonsterDerby.Presentation.UI;
+using MonsterDerby.Presentation.Screens.Catalog;
 
 namespace MonsterDerby.Presentation.Navigation
 {
