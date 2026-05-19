@@ -24,6 +24,13 @@ namespace MonsterDerby.Presentation
         [Header("Navigation")]
         [SerializeField] private ScreenNavigator _screenNavigator;
 
+
+        [Header("Catalog Unlock Repository")]
+        [SerializeField] private CatalogUnlockRepositoryAsset _catalogUnlockRepository;
+
+        [Header("Monster Definition Repository")]
+        [SerializeField] private MonsterDefinitionRepositoryAsset _monsterDefinitionRepository;
+
         private DependencyRoot _dependencies;
 
         private void Awake()
@@ -59,6 +66,12 @@ namespace MonsterDerby.Presentation
             }
 
             // DependencyRoot 生成
+
+            if (_catalogUnlockRepository == null)
+                throw new System.InvalidOperationException("CatalogUnlockRepositoryAsset が Inspector に設定されていません。");
+            if (_monsterDefinitionRepository == null)
+                throw new System.InvalidOperationException("MonsterDefinitionRepositoryAsset が Inspector に設定されていません。");
+
             _dependencies = new DependencyRoot(
                 courseRepository,
                 skillRepository,
@@ -66,7 +79,9 @@ namespace MonsterDerby.Presentation
                 monsterVisualRepository,
                 gameSession,
                 _screenNavigator,
-                _masterDataCatalog
+                _masterDataCatalog,
+                _catalogUnlockRepository,
+                _monsterDefinitionRepository
             );
 
             // Factory 生成
