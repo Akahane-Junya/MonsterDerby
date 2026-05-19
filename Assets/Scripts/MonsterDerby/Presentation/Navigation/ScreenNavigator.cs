@@ -26,6 +26,7 @@ namespace MonsterDerby.Presentation.Navigation
         [SerializeField] private StatusView _statusView;
         [SerializeField] private AwardsView _awardsView;
         [SerializeField] private SettingsView _settingsView;
+        [SerializeField] private CatalogView _catalogView;
 
         private IPresenterFactory _presenterFactory;
         private IScreenPresenter _currentPresenter;
@@ -128,6 +129,7 @@ namespace MonsterDerby.Presentation.Navigation
             SetActive(_statusView, false);
             SetActive(_awardsView, false);
             SetActive(_settingsView, false);
+            SetActive(_catalogView, false);
         }
 
         private void ShowPreviousView(ScreenId screenId)
@@ -161,6 +163,8 @@ namespace MonsterDerby.Presentation.Navigation
                     return _awardsView;
                 case ScreenId.Settings:
                     return _settingsView;
+                case ScreenId.Catalog:
+                    return _catalogView;
                 default:
                     return null;
             }
