@@ -18,6 +18,12 @@
                 <AttributeOverrides element-name="label" text="コウハイ"/>
                 <AttributeOverrides element-name="iconShadow" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=1284676089&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_4"/>
             </ui:Instance>
+            <!-- Catalogボタン（交配の下に移動） -->
+            <ui:Instance template="ScreenButton" name="catalogButton">
+                <AttributeOverrides element-name="icon" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=689204601&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_5"/>
+                <AttributeOverrides element-name="label" text="図鑑"/>
+                <AttributeOverrides element-name="iconShadow" source="project://database/Assets/Art/UI/ScreenButtons.png?fileID=689204601&amp;guid=6a0c3906639109c47a2bf9826ce07b8c&amp;type=3#ScreenButtons_5"/>
+            </ui:Instance>
         </ui:VisualElement>
         <ui:VisualElement name="centerArea" style="flex-grow: 1; width: 216px; align-items: center; justify-content: center;">
             <ui:Image name="monster" source="project://database/Assets/Art/World/Dragon.png?fileID=2800000&amp;guid=741d68614c4f8054f808e94965b35843&amp;type=3#Dragon" style="position: absolute;"/>
