@@ -5,6 +5,7 @@ using MonsterDerby.Domain.SharedKernel;
 using MonsterDerby.Infrastructure.MasterData;
 using MonsterDerby.Infrastructure.Repositories;
 using MonsterDerby.Infrastructure.Save;
+using MonsterDerby.Domain.Monster;
 using MonsterDerby.Presentation.Navigation;
 
 namespace MonsterDerby.Presentation
