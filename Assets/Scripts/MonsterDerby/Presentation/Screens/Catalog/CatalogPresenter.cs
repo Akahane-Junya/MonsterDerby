@@ -12,27 +12,31 @@ namespace MonsterDerby.Presentation.Screens.Catalog
 
     using MonsterDerby.Application.Context;
 
+
+    using MonsterDerby.Domain.Catalog;
+    using MonsterDerby.Domain.Monster;
+    using UnityEngine;
+
     public sealed class CatalogPresenter : IScreenPresenter
     {
         private CatalogView _view;
         private readonly INavigationContext _navigationContext;
+        private readonly ICatalogUnlockRepository _catalogUnlockRepository;
+        private readonly MonsterDefinitionRepositoryAsset _monsterRepository;
         private enum TabKind { Monster, Skill }
         private TabKind _currentTab = TabKind.Monster;
 
-        // 仮データ（本来はリポジトリ/ScriptableObjectから取得）
-        private class CatalogEntry { public string Name; public string Description; public bool IsUnlocked; }
-        private List<CatalogEntry> _monsterEntries = new List<CatalogEntry> {
-            new CatalogEntry { Name = "Slime", Description = "A basic monster.", IsUnlocked = true },
-            new CatalogEntry { Name = "Dragon", Description = "A rare dragon.", IsUnlocked = false },
-        };
-        private List<CatalogEntry> _skillEntries = new List<CatalogEntry> {
-            new CatalogEntry { Name = "Fireball", Description = "Deals fire damage.", IsUnlocked = true },
-            new CatalogEntry { Name = "Heal", Description = "Restores HP.", IsUnlocked = false },
-        };
+        private List<MonsterDefinitionSO> _monsterDefs;
 
-        public CatalogPresenter(INavigationContext navigationContext)
+        public CatalogPresenter(
+            INavigationContext navigationContext,
+            ICatalogUnlockRepository catalogUnlockRepository,
+            MonsterDefinitionRepositoryAsset monsterRepository)
         {
             _navigationContext = navigationContext;
+            _catalogUnlockRepository = catalogUnlockRepository;
+            _monsterRepository = monsterRepository;
+            _monsterDefs = _monsterRepository.GetAll() != null ? new List<MonsterDefinitionSO>(_monsterRepository.GetAll()) : new List<MonsterDefinitionSO>();
         }
 
         public void BindView(IScreenView view)
@@ -42,7 +46,6 @@ namespace MonsterDerby.Presentation.Screens.Catalog
             _view.OnMonsterTabClicked += () => SwitchTab(TabKind.Monster);
             _view.OnSkillTabClicked += () => SwitchTab(TabKind.Skill);
             _view.ItemList.selectionChanged += OnItemSelected;
-            // 閉じるボタンでHomeに戻る
             var closeButton = (_view.GetType().GetProperty("CloseButton")?.GetValue(_view) as Button) ?? _view.GetComponent<UIDocument>()?.rootVisualElement?.Q<Button>("closeButton");
             if (closeButton != null)
                 closeButton.clicked += () => NavigationToHome();
@@ -63,18 +66,22 @@ namespace MonsterDerby.Presentation.Screens.Catalog
             if (_view == null) return;
             if (tab == TabKind.Monster)
             {
-                _view.ItemList.itemsSource = _monsterEntries;
+                _view.ItemList.itemsSource = _monsterDefs;
+                _view.ItemList.makeItem = () => new Label();
+                _view.ItemList.bindItem = (e, i) =>
+                {
+                    var def = _monsterDefs[i];
+                    var stage = _catalogUnlockRepository.GetMonsterUnlockStage(def.Id);
+                    (e as Label).text = stage == CatalogUnlockStage.None ? "???" : def.Name;
+                };
             }
             else
             {
-                _view.ItemList.itemsSource = _skillEntries;
+                // TODO: スキル図鑑対応
+                _view.ItemList.itemsSource = new List<string>();
+                _view.ItemList.makeItem = () => new Label();
+                _view.ItemList.bindItem = (e, i) => { (e as Label).text = "-"; };
             }
-            _view.ItemList.makeItem = () => new Label();
-            _view.ItemList.bindItem = (e, i) =>
-            {
-                var entry = (_currentTab == TabKind.Monster ? _monsterEntries : _skillEntries)[i];
-                (e as Label).text = entry.IsUnlocked ? entry.Name : "???";
-            };
             _view.ItemList.Rebuild();
             if (_view.ItemList.itemsSource.Count > 0)
                 _view.ItemList.selectedIndex = 0;
@@ -82,15 +89,44 @@ namespace MonsterDerby.Presentation.Screens.Catalog
 
         private void OnItemSelected(IEnumerable<object> selected)
         {
-            var entry = selected?.FirstOrDefault() as CatalogEntry;
-            if (entry == null || _view == null) return;
-            _view.DetailPanel.Clear();
-            var title = new Label(entry.IsUnlocked ? entry.Name : "???") { name = "detailTitle" };
-            var desc = new Label(entry.IsUnlocked ? entry.Description : "未解禁です") { name = "detailDescription" };
-            var unlock = new Label(entry.IsUnlocked ? "解禁済み" : "未解禁") { name = "detailUnlockStatus" };
-            _view.DetailPanel.Add(title);
-            _view.DetailPanel.Add(desc);
-            _view.DetailPanel.Add(unlock);
+            if (_currentTab == TabKind.Monster)
+            {
+                var def = selected?.FirstOrDefault() as MonsterDefinitionSO;
+                if (def == null || _view == null) return;
+                var stage = _catalogUnlockRepository.GetMonsterUnlockStage(def.Id);
+                _view.DetailPanel.Clear();
+                // タイトル
+                var title = new Label(stage == CatalogUnlockStage.None ? "???" : def.Name) { name = "detailTitle" };
+                _view.DetailPanel.Add(title);
+                // アイコン
+                if (stage != CatalogUnlockStage.None && def.Icon != null)
+                {
+                    var icon = new UnityEngine.UIElements.Image { image = def.Icon.texture, name = "detailIcon" };
+                    _view.DetailPanel.Add(icon);
+                }
+                // 説明
+                var desc = new Label(stage == CatalogUnlockStage.Raised ? def.Description : "") { name = "detailDescription" };
+                _view.DetailPanel.Add(desc);
+                // 成長タイプ
+                var growth = new Label(stage == CatalogUnlockStage.Raised ? $"成長: {def.GrowthType}" : "") { name = "detailGrowthType" };
+                _view.DetailPanel.Add(growth);
+                // スキル一覧
+                if (stage == CatalogUnlockStage.Raised && def.SkillIds != null)
+                {
+                    var skills = string.Join(", ", def.SkillIds);
+                    var skillLabel = new Label($"スキル: {skills}") { name = "detailSkills" };
+                    _view.DetailPanel.Add(skillLabel);
+                }
+                // アンロック状態
+                var unlock = new Label(stage == CatalogUnlockStage.Raised ? "全情報解放" : stage == CatalogUnlockStage.Encountered ? "出会った" : "???") { name = "detailUnlockStatus" };
+                _view.DetailPanel.Add(unlock);
+            }
+            else
+            {
+                // TODO: スキル図鑑対応
+                _view.DetailPanel.Clear();
+                _view.DetailPanel.Add(new Label("未対応"));
+            }
         }
     }
 }
